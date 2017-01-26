@@ -31,6 +31,10 @@ import (
 	"github.com/rangertaha/go-accounts/accounts"
 )
 
+func LoginRequired (){
+
+}
+
 func main() {
 	cmd.Execute()
 
@@ -42,13 +46,24 @@ func main() {
 	// accounts : = NewAccounts(CustomConfig)
 
 
+
+
 	e := echo.New()
 
-
-	//e.GET("/", accounts.Login)
-	//e.GET("/", accounts.Login)
+	g := e.Group("/account")
 
 
-	e.Logger.Fatal(e.Start(":1323"))
+	g.POST("/signup", accounts.Signup)
+	g.POST("/login", accounts.Login)
+	g.GET("/logout", accounts.Logout)
+	g.GET("/confirm/:Token", accounts.Confirm)
+	g.GET("/delete", accounts.Delete, LoginRequired)
+
+	g.GET("/password", accounts.Password, LoginRequired)
+	g.GET("/password/reset", accounts.Reset)
+	g.GET("/password/reset/:Token", accounts.ResetId)
+	g.GET("/settings", accounts.Settings, LoginRequired)
+
+	e.Logger.Fatal(e.Start(":8888"))
 
 }
