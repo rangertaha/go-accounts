@@ -59,9 +59,10 @@ func main() {
 	g.GET("/confirm/:Token", accounts.Confirm)
 	g.GET("/delete", accounts.Delete, LoginRequired)
 
-	g.GET("/password", accounts.Password, LoginRequired)
-	g.GET("/password/reset", accounts.Reset)
+	g.POST("/password/change", accounts.Password, LoginRequired)
+	g.POST("/password/reset", accounts.Reset)
 	g.GET("/password/reset/:Token", accounts.ResetId)
+	
 	g.GET("/settings", accounts.Settings, LoginRequired)
 
 	e.Logger.Fatal(e.Start(":8888"))
